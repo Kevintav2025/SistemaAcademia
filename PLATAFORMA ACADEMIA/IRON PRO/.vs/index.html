@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia Iron Pro - Planos</title>
+    <style>
+        /* CSS - ESTILO VISUAL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #f39c12; /* Amarelo Academia */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -40px auto 50px;
+            padding: 0 20px;
+        }
+
+        /* GRID DE PLANOS */
+        .planos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #f39c12;
+            box-shadow: 0 10px 20px rgba(243, 156, 18, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 13px;
+            color: #fff;
+        }
+
+        .preco {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #f39c12;
+            margin-bottom: 20px;
+        }
+
+        .preco span {
+            font-size: 1rem;
+            color: #888;
+        }
+
+        .lista-beneficios {
+            list-style: none;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .lista-beneficios li {
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+        }
+
+        .btn-assinar {
+            background-color: #f39c12;
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-assinar:hover {
+            background-color: #e67e22;
+        }
+
+        /* PLANO DESTAQUE (MEIO) */
+        .destaque {
+            border: 2px solid #f39c12;
+            position: relative;
+            transform: scale(1.05);
+            background-color: #222;
+        }
+
+        .tag-destaque {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f39c12;
+            color: #000;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* SEÇÃO DE CHECKOUT (ESCONDIDA) */
+        #checkout {
+            display: none;
+            max-width: 500px;
+            margin: 50px auto;
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 12px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-pagamento h2 {
+            margin-bottom: 20px;
+            color: #f39c12;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #0d0d0d;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .btn-confirmar {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-voltar {
+            display: block;
+            margin-top: 15px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Escolha seu Plano</h1>
+        <p>A melhor infraestrutura para o seu treino.</p>
+    </header>
+
+    <main class="container">
+        <section id="sessao-planos" class="planos-grid">
+            
+            <div class="card">
+                <h3>Plano Bronze</h3>
+                <p class="preco">R$ 89,90<span>/mês</span></p>
+                <ul class="lista-beneficios">
+                    <li>Musculação completa</li>
+                    <li>Área de Cardio</li>
+                    <li>Vestiário</li>
+                    <li>Sem taxa de adesão</li>
+                </ul>
+                <button class="btn-assinar" onclick="abrirCheckout('Bronze', '89,90')">Selecionar</button>
+            </div>
+
+            <div class="card destaque">
+                <div class="tag-destaque">MAIS POPULAR</div>
+                <h3>Plano Silver</h3>
+                <p class="preco">R$ 119,90<span>/mês</span></p>
+                <ul class="lista-beneficios">
+                    <li>Tudo do Plano Bronze</li>
+                    <li>Aulas de FitDance</li>
+                    <li>Avaliação Bioimpedância</li>
+                    <li>Acesso a 2 Unidades</li>
+                </ul>
+                <button class="btn-assinar" onclick="abrirCheckout('Silver', '119,90')">Selecionar</button>
+            </div>
+
+            <div class="card">
+                <h3>Plano Gold</h3>
+                <p class="preco">R$ 159,90<span>/mês</span></p>
+                <ul class="lista-beneficios">
+                    <li>Acesso Total (VIP)</li>
+                    <li>Lutas e Crossfit</li>
+                    <li>Pode levar 1 amigo/dia</li>
+                    <li>Cadeira de Massagem</li>
+                </ul>
+                <button class="btn-assinar" onclick="abrirCheckout('Gold', '159,90')">Selecionar</button>
+            </div>
+
+        </section>
+
+        <section id="checkout">
+            <div class="form-pagamento">
+                <h2>Finalizar Assinatura</h2>
+                <p style="margin-bottom: 20px;">Plano Selecionado: <strong id="plano-nome" style="color: #f39c12;"></strong></p>
+                
+                <input type="text" placeholder="Nome Completo">
+                <input type="email" placeholder="Seu melhor e-mail">
+                <input type="text" placeholder="Número do Cartão">
+                
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Validade (MM/AA)">
+                    <input type="text" placeholder="CVV">
+                </div>
+
+                <button class="btn-confirmar" onclick="alert('Inscrição realizada com sucesso! Bem-vindo à Iron Pro.')">Confirmar Pagamento - R$ <span id="plano-valor"></span></button>
+                <button class="btn-voltar" onclick="voltarParaPlanos()">← Voltar para os planos</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // JAVASCRIPT - LÓGICA DE INTERAÇÃO
+        function abrirCheckout(nome, valor) {
+            // Esconder planos
+            document.getElementById('sessao-planos').classList.add('hidden');
+            
+            // Mostrar checkout
+            const checkout = document.getElementById('checkout');
+            checkout.style.display = 'block';
+            
+            // Preencher dados do plano
+            document.getElementById('plano-nome').innerText = nome;
+            document.getElementById('plano-valor').innerText = valor;
+
+            // Rolar para o topo
+            window.scrollTo(0, 0);
+        }
+
+        function voltarParaPlanos() {
+            // Esconder checkout
+            document.getElementById('checkout').style.display = 'none';
+            
+            // Mostrar planos
+            document.getElementById('sessao-planos').classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>

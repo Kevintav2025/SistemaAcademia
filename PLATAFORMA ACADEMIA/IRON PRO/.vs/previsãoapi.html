@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsão do Tempo</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .search button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #ff9800;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search button:hover {
+      background: #ffc107;
+    }
+
+    .weather {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .emoji {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+
+    .temp {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .desc {
+      text-transform: capitalize;
+      margin-top: 5px;
+    }
+
+    .city {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.3rem; }
+      .temp { font-size: 2rem; }
+      .emoji { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🌤️ Previsão do Tempo</h1>
+
+    <div class="search">
+      <input type="text" id="cityInput" placeholder="Digite a cidade">
+      <button onclick="buscarClima()">Buscar</button>
+    </div>
+
+    <div class="weather" id="weather">
+      <div class="emoji" id="emoji">☀️</div>
+      <div class="temp" id="temp"></div>
+      <div class="desc" id="desc"></div>
+      <div class="city" id="city"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "20497c8b5972e884e7c852b6a5da1a95";
+
+    async function buscarClima() {
+      const cidade = document.getElementById("cityInput").value;
+
+      if (cidade === "") {
+        alert("Digite uma cidade");
+        return;
+      }
+
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cidade},BR&appid=${API_KEY}&units=metric&lang=pt_br`;
+
+      try {
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
+
+        if (dados.cod !== 200) {
+          alert("Cidade não encontrada");
+          return;
+        }
+
+        atualizarTela(dados);
+      } catch (erro) {
+        alert("Erro ao buscar dados da API");
+        console.error(erro);
+      }
+    }
+
+    function atualizarTela(dados) {
+      const temperatura = Math.round(dados.main.temp);
+      const descricao = dados.weather[0].description;
+      const cidade = dados.name;
+
+      document.getElementById("temp").innerText = `${temperatura}°C`;
+      document.getElementById("desc").innerText = descricao;
+      document.getElementById("city").innerText = cidade;
+      document.getElementById("emoji").innerText = emojiClima(descricao);
+
+      document.getElementById("weather").style.display = "block";
+    }
+
+    function emojiClima(desc) {
+      const texto = desc.toLowerCase();
+      if (texto.includes("chuva")) return "🌧️";
+      if (texto.includes("nublado")) return "☁️";
+      if (texto.includes("nuvens")) return "☁️";
+      if (texto.includes("limpo")) return "☀️";
+      if (texto.includes("neve")) return "❄️";
+      if (texto.includes("tempestade")) return "⛈️";
+      return "🌡️";
+    }
+  </script>
+
+</body>
+</html>

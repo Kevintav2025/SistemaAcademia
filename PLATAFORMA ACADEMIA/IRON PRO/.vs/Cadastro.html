@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia Iron Pro - Login</title>
+    <style>
+        /* ESTILOS GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .auth-container {
+            background-color: rgba(26, 26, 26, 0.95);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .auth-container h2 {
+            font-size: 2rem;
+            color: #f39c12;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .auth-container p {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* FORMULÁRIO */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.85rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0d0d0d;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #f39c12;
+        }
+
+        /* BOTÕES */
+        .btn-principal {
+            width: 100%;
+            padding: 14px;
+            background-color: #f39c12;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-principal:hover {
+            background-color: #e67e22;
+            transform: scale(1.02);
+        }
+
+        /* ALTERNAR ENTRE LOGIN/REGISTRO */
+        .toggle-text {
+            margin-top: 23px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .toggle-text span {
+            color: #f39c12;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ANIMAÇÃO */
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container fade-in">
+        <div id="login-section">
+            <h2>Login</h2>
+            <p>Bem-vindo de volta, atleta!</p>
+            
+            <div class="form-group">
+                <label>E-mail ou CPF</label>
+                <input type="text" placeholder="Digite seu acesso">
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+
+            <button class="btn-principal" onclick="alert('Fazendo login...')">Entrar na Plataforma</button>
+
+            <div class="toggle-text">
+                Ainda não tem conta? <span onclick="toggleAuth()">Cadastre-se aqui</span>
+            </div>
+        </div>
+
+        <div id="register-section" class="hidden">
+            <h2>Registro</h2>
+            <p>Crie sua conta para começar o treino.</p>
+            
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" placeholder="Ex: João Silva">
+            </div>
+
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" placeholder="exemplo@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Crie uma Senha</label>
+                <input type="password" placeholder="No mínimo 6 dígitos">
+            </div>
+
+            <button class="btn-principal" onclick="alert('Conta criada! Agora faça o login.')">Criar Conta</button>
+
+            <div class="toggle-text">
+                Já possui uma conta? <span onclick="toggleAuth()">Faça o Login</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAuth() {
+            const loginSection = document.getElementById('login-section');
+            const registerSection = document.getElementById('register-section');
+
+            // Alterna a classe hidden entre as duas seções
+            loginSection.classList.toggle('hidden');
+            registerSection.classList.toggle('hidden');
+            
+            // Adiciona animação ao trocar
+            const container = document.querySelector('.auth-container');
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // Truque para reiniciar animação CSS
+            container.classList.add('fade-in');
+        }
+    </script>
+</body>
+</html>

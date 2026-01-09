@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Pro Store - Oficial</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+        body { background-color: #000; color: #fff; padding: 15px; }
+        .container { max-width: 600px; margin: 0 auto; }
+
+        header { text-align: center; padding: 30px 0; border-bottom: 3px solid #f39c12; margin-bottom: 25px; }
+        header h1 { font-size: 2rem; letter-spacing: 2px; }
+        header span { color: #f39c12; }
+
+        h2 { color: #f39c12; text-transform: uppercase; font-size: 1.2rem; margin: 30px 0 15px; text-align: center; letter-spacing: 1px; }
+
+        /* CARD DE AVALIAÇÃO */
+        .card-av {
+            background: #111;
+            border-left: 5px solid #f39c12;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .campo { margin-bottom: 15px; }
+        label { display: block; color: #f39c12; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 8px; }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-acao {
+            width: 100%;
+            padding: 18px;
+            background: #f39c12;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        /* VITRINE DE PRODUTOS */
+        .produto {
+            background: #111;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid #222;
+        }
+
+        .marca-selo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .logo-max-interna {
+            width: 60px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .nome-produto {
+            font-size: 1.1rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .preco { 
+            font-size: 2rem; 
+            color: #f39c12; 
+            margin: 10px 0 15px 0; 
+            font-weight: 900;
+            display: block; 
+            text-align: center;
+        }
+
+        #painel-logs {
+            background: #0a0a0a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            border: 1px solid #333;
+            color: #00ff00;
+            min-height: 50px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>IRON <span>PRO</span> SYSTEM</h1>
+        </header>
+
+        <h2>1. Ficha de Avaliação</h2>
+        <div class="card-av">
+            <div class="campo">
+                <label>Nome do Aluno</label>
+                <input type="text" id="nome" placeholder="NOME COMPLETO">
+            </div>
+            <div class="campo">
+                <label>Objetivo</label>
+                <select id="objetivo">
+                    <option value="GANHAR MASSA">GANHAR MASSA MUSCULAR</option>
+                    <option value="PERDA DE GORDURA">PERDA / DEFINIÇÃO</option>
+                </select>
+            </div>
+            <button class="btn-acao" onclick="salvarAvaliacao()">REGISTRAR ALUNO</button>
+        </div>
+
+        <h2>2. Suplementação</h2>
+       
+        <div class="produto">
+            <div class="marca-selo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiykKU0mOirvSd1yNrrY2CUlgkhKo3u9CiWthnTZr82w&s=10" class="logo-max-interna">
+                <p class="nome-produto">WHEY PROTEIN 3W</p>
+            </div>
+            
+            <p class="preco">R$ 189,90</p>
+            <button class="btn-acao" onclick="comprar('Whey Protein')">RESERVAR AGORA</button>
+        </div>
+
+        <div class="produto">
+            <div class="marca-selo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF3ttsinFrcFdkaLv96W_DjVx54RyvN6J0mOXrzl4WKQ&s=10" class="logo-max-interna">
+                <p class="nome-produto">CREATINA MONOHIDRATADA</p>
+            </div>
+            
+            <p class="preco">R$ 95,00</p>
+            <button class="btn-acao" onclick="comprar('Creatina')">RESERVAR AGORA</button>
+        </div>
+
+        <h2>Relatório</h2>
+        <div id="painel-logs">Aguardando registros...</div>
+    </div>
+
+    <script>
+        function salvarAvaliacao() {
+            const n = document.getElementById('nome').value;
+            const o = document.getElementById('objetivo').value;
+            if(!n) return alert("Erro: Digite o nome do aluno.");
+            
+            let logs = JSON.parse(localStorage.getItem('iron_db')) || [];
+            logs.push({ 
+                tipo: "AVALIAÇÃO", 
+                nome: n.toUpperCase(), 
+                info: o, 
+                data: new Date().toLocaleTimeString() 
+            });
+            
+            localStorage.setItem('iron_db', JSON.stringify(logs));
+            alert("Ficha técnica salva!");
+            atualizar();
+        }
+
+        function comprar(item) {
+            const n = prompt("Nome do Aluno:");
+            if(!n) return;
+
+            let logs = JSON.parse(localStorage.getItem('iron_db')) || [];
+            logs.push({ 
+                tipo: "RESERVA", 
+                nome: n.toUpperCase(), 
+                info: item, 
+                data: new Date().toLocaleTimeString() 
+            });
+            
+            localStorage.setItem('iron_db', JSON.stringify(logs));
+            alert("Reserva feita!");
+            atualizar();
+        }
+
+        function atualizar() {
+            const dados = JSON.parse(localStorage.getItem('iron_db')) || [];
+            document.getElementById('painel-logs').innerHTML = dados.map(d => [${d.data}] ${d.tipo} -> ${d.nome} (${d.info})).join('<br>');
+        }
+        window.onload = atualizar;
+    </script>
+</body>
+</html>

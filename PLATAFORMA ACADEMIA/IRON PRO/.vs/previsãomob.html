@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather UI</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #e9f1f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* APP */
+.app {
+  background: #ffffff;
+  width: 900px;
+  max-width: 100%;
+  border-radius: 20px;
+  display: flex;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* ESQUERDA */
+.left {
+  flex: 2;
+  padding: 30px;
+}
+
+.city {
+  font-size: 18px;
+  color: #666;
+}
+
+.temp-main {
+  font-size: 72px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.condition {
+  color: #777;
+  font-size: 18px;
+}
+
+.condition span {
+  font-size: 22px;
+  margin-right: 6px;
+}
+
+/* TRÍADE */
+.triad {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.triad-card {
+  background: #f3f7fb;
+  flex: 1;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.triad-card h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.triad-card .emoji {
+  font-size: 26px;
+  margin: 6px 0;
+}
+
+.triad-card p {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* DIREITA */
+.right {
+  flex: 1;
+  background: #f6f9fc;
+  padding: 25px;
+}
+
+.day {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e6ed;
+  font-size: 14px;
+  color: #555;
+}
+
+.day span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.day:last-child {
+  border-bottom: none;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+
+  body {
+    align-items: flex-start;
+  }
+
+  .app {
+    flex-direction: column;
+    border-radius: 0;
+    height: auto;
+  }
+
+  .left {
+    padding: 20px;
+  }
+
+  .temp-main {
+    font-size: 56px;
+  }
+
+  .condition {
+    font-size: 16px;
+  }
+
+  .triad {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .right {
+    padding: 15px;
+  }
+
+  .right {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+  }
+
+  .day {
+    min-width: 140px;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: none;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- ESQUERDA -->
+  <div class="left">
+    <div class="city">Belém, PA</div>
+
+    <div class="temp-main">30°</div>
+
+    <div class="condition">
+      <span>🌤️</span> Parcialmente nublado
+    </div>
+
+    <div class="triad">
+      <div class="triad-card">
+        <h4>Manhã</h4>
+        <div class="emoji">🌤️</div>
+        <p>26°</p>
+      </div>
+
+      <div class="triad-card">
+        <h4>Tarde</h4>
+        <div class="emoji">☀️</div>
+        <p>30°</p>
+      </div>
+
+      <div class="triad-card">
+        <h4>Noite</h4>
+        <div class="emoji">🌙☁️</div>
+        <p>23°</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIREITA -->
+  <div class="right">
+    <div class="day"><span>🌤️ Segunda</span><span>29° / 24°</span></div>
+    <div class="day"><span>☀️ Terça</span><span>30° / 25°</span></div>
+    <div class="day"><span>☀️ Quarta</span><span>30° / 25°</span></div>
+    <div class="day"><span>🌦️ Quinta</span><span>28° / 23°</span></div>
+    <div class="day"><span>🌧️ Sexta</span><span>29° / 24°</span></div>
+    <div class="day"><span>🌧️ Sábado</span><span>27° / 22°</span></div>
+    <div class="day"><span>☀️ Domingo</span><span>30° / 26°</span></div>
+  </div>
+
+</div>
+
+</body>
+</html>
