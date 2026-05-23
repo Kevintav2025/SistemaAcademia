@@ -1,4 +1,5 @@
 # 🏋️‍♂️ SistemaAcademia - Gestão de Alunos e Matrículas
+🔗 **Acesse o projeto online:** [https://kevintav2025.github.io/SistemaAcademia/]
 
 Um sistema moderno e intuitivo desenvolvido para automatizar o gerenciamento de academias, estúdios de fitness ou crossfit. O projeto une a robustez da lógica em **Java** com a flexibilidade do **Google Apps Script** para criar uma interface web responsiva conectada diretamente a planilhas automatizadas.
 
