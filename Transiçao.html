@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - Iron Pro</title>
+    <style>
+        :root {
+            --primaria: #f39c12;
+            --bg: #0d0d0d;
+            --card: #1a1a1a;
+            --texto: #ffffff;
+            --subtexto: #888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--texto); padding: 20px; }
+
+        .dashboard {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Layout: Main e Lateral */
+            gap: 20px;
+        }
+
+        /* HEADER DO ALUNO */
+        .welcome-header {
+            grid-column: 1 / -1;
+            padding: 20px;
+            background: linear-gradient(90deg, #1a1a1a, #222);
+            border-radius: 15px;
+            border-left: 5px solid var(--primaria);
+            margin-bottom: 10px;
+        }
+
+        .welcome-header h1 { font-size: 1.5rem; }
+        .welcome-header span { color: var(--primaria); }
+
+        /* CARDS PRINCIPAIS */
+        .card-plano {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+
+        .status-badge {
+            background: #27ae60;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .info-item { margin-bottom: 15px; }
+        .info-item label { color: var(--subtexto); font-size: 0.85rem; display: block; }
+        .info-item p { font-weight: bold; font-size: 1.1rem; }
+
+        /* TREINO DO DIA */
+        .treino-hoje {
+            margin-top: 20px;
+            background: #222;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .exercicio {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        /* LATERAL: ACESSO QR CODE */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .qr-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: black;
+        }
+
+        .qr-card h3 { font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
+        .qr-placeholder {
+            width: 150px;
+            height: 150px;
+            background: #eee;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: #ff4757;
+            border: 1px solid #ff4757;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover { background: #ff4757; color: white; }
+
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <header class="welcome-header">
+            <h1>Olá, <span>Atleta Yuri</span>!</h1>
+            <p>Foco nos objetivos! Hoje é dia de superiores.</p>
+        </header>
+
+        <div class="main-content">
+            <div class="card-plano">
+                <div class="status-badge">ASSINATURA ATIVA</div>
+                
+                <div class="info-item">
+                    <label>Seu Plano Atual</label>
+                    <p id="nome-plano">Plano Silver (Mensal)</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Próxima Renovação</label>
+                    <p>04 de Fevereiro de 2026</p>
+                </div>
+
+                <div class="treino-hoje">
+                    <h3 style="margin-bottom: 15px; color: var(--primaria);">Sessão de Hoje: Treino A</h3>
+                    <div class="exercicio">
+                        <span>Supino Reto</span>
+                        <strong>4x12</strong>
+                    </div>
+                    <div class="exercicio">
+                        <span>Desenvolvimento</span>
+                        <strong>3x10</strong>
+                    </div>
+                    <div class="exercicio">
+                        <span>Tríceps Corda</span>
+                        <strong>4x15</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="qr-card">
+                <h3>Acesso à Academia</h3>
+                <div class="qr-placeholder">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=AlunoYuri123" alt="QR Code Acesso">
+                </div>
+                <p style="font-size: 0.7rem; color: #666;">Aproxime do leitor na catraca</p>
+            </div>
+
+            <button class="btn-logout" onclick="location.href='index.html'">Sair da Conta</button>
+        </div>
+    </div>
+
+</body>
+</html>

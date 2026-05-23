@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Pro Store - Oficial</title>
+    <style>
+        :root {
+            --primaria: #f39c12; 
+            --bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --foto-bg: #252525; 
+            --texto: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--texto); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+
+        .loja-container { width: 100%; max-width: 1200px; }
+
+        .header-loja { margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .header-loja h1 span { color: var(--primaria); }
+
+        .grid-produtos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
+
+        .card-produto { background: var(--card-bg); border-radius: 12px; padding: 15px; border: 1px solid var(--primaria); display: flex; flex-direction: column; }
+
+        .foto-container { background: var(--foto-bg); width: 100%; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
+        .foto-container img { max-width: 80%; max-height: 80%; object-fit: contain; }
+
+        .marca-item { color: var(--primaria); font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .nome-item { font-size: 1.1rem; margin: 5px 0 10px; min-height: 45px; }
+        .preco-item { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; }
+
+        .btn-comprar { background: var(--primaria); color: black; border: none; padding: 14px; border-radius: 8px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-comprar:hover { background: #e67e22; }
+
+        /* MODAL DE PAGAMENTO */
+        #modalPagamento {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center; align-items: center;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: #222; padding: 25px; border-radius: 15px; border: 1px solid var(--primaria);
+            width: 95%; max-width: 450px; text-align: center;
+        }
+
+        input, select {
+            width: 100%; padding: 12px; margin: 8px 0;
+            background: #333; border: 1px solid #444; color: white; border-radius: 5px;
+        }
+
+        .metodo-pagamento {
+            display: flex; gap: 10px; margin: 15px 0;
+        }
+
+        .opt-pay {
+            flex: 1; background: #333; padding: 10px; border-radius: 5px; cursor: pointer; border: 1px solid #444; font-size: 0.8rem;
+        }
+
+        .opt-pay.active { border-color: var(--primaria); background: #f39c1222; }
+
+        /* COMPROVANTE */
+        #comprovante {
+            display: none;
+            background: white; color: black; padding: 20px; border-radius: 5px;
+            margin-top: 20px; text-align: left; font-family: 'Courier New', monospace;
+            border: 2px dashed #000;
+        }
+
+        .imprimir-btn { background: #27ae60; color: white; padding: 12px; border: none; width: 100%; margin-top: 10px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <div class="loja-container">
+        <header class="header-loja">
+            <h1>Iron <span>Pro</span> Store</h1>
+        </header>
+
+        <main class="grid-produtos">
+            <div class="card-produto">
+                <div class="foto-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzME2Wr0yZWr8QiNOsAtaelF6dJUljuOvh6mvWDgSbDA2GgW-sRIFZQzc&s=10"></div>
+                <span class="marca-item">IRON PRO</span>
+                <h3 class="nome-item">Whey Protein Isolado (900g)</h3>
+                <span class="preco-item">R$ 189,90</span>
+                <button class="btn-comprar" onclick="abrirPagamento('Whey Protein', '189,90')">Comprar Agora</button>
+            </div>
+
+            <div class="card-produto">
+                <div class="foto-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBn00MRYw2neE2vzmn81y8YZ9nbfvrYL548Q&s"></div>
+                <span class="marca-item">IRON PRO</span>
+                <h3 class="nome-item">Creatina Monohidratada (300g)</h3>
+                <span class="preco-item">R$ 95,00</span>
+                <button class="btn-comprar" onclick="abrirPagamento('Creatina', '95,00')">Comprar Agora</button>
+            </div>
+
+            <div class="card-produto">
+                <div class="foto-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj9exnT6mKrsqA6vBmw0Oes3eYv9PiDp4LuPp8-roUfA&s=10"></div>
+                <span class="marca-item">IRON PRO</span>
+                <h3 class="nome-item">Termogênico Fire Max (60 caps)</h3>
+                <span class="preco-item">R$ 88,00</span>
+                <button class="btn-comprar" onclick="abrirPagamento('Termogênico', '88,00')">Comprar Agora</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalPagamento">
+        <div class="modal-content">
+            <h2 style="color: var(--primaria)">Finalizar Pedido</h2>
+            <p id="detalhePedido" style="margin: 10px 0; color: #ccc; font-weight: bold;"></p>
+            
+            <input type="text" id="nomeAluno" placeholder="Nome do Aluno">
+            <input type="text" id="cpfAluno" placeholder="CPF">
+
+            <p style="margin-top: 15px; font-size: 0.9rem;">Escolha a forma de pagamento:</p>
+            <div class="metodo-pagamento">
+                <div class="opt-pay" id="payPix" onclick="setPay('Pix')">PIX</div>
+                <div class="opt-pay" id="payCard" onclick="setPay('Cartão')">CARTÃO</div>
+                <div class="opt-pay" id="payQG" onclick="setPay('QG')">QG (Unidade)</div>
+            </div>
+
+            <div id="infoExtra" style="margin-bottom: 15px; color: var(--primaria); font-size: 0.8rem;"></div>
+
+            <button class="btn-comprar" onclick="gerarComprovante()">Confirmar Pedido</button>
+            <button onclick="fecharModal()" style="background: none; border: none; color: #888; margin-top: 15px; cursor: pointer;">Voltar</button>
+
+            <div id="comprovante">
+                <center><strong>IRON PRO STORE - COMPROVANTE</strong></center>
+                <hr style="margin: 10px 0; border: 1px dashed #000;">
+                <p><strong>ALUNO:</strong> <span id="compNome"></span></p>
+                <p><strong>PRODUTO:</strong> <span id="compProd"></span></p>
+                <p><strong>VALOR:</strong> R$ <span id="compValor"></span></p>
+                <p><strong>PAGAMENTO:</strong> <span id="compMetodo"></span></p>
+                <p><strong>DATA:</strong> <span id="compData"></span></p>
+                <hr style="margin: 10px 0; border: 1px dashed #000;">
+                <center><small id="msgFinal"></small></center>
+                <button class="imprimir-btn" onclick="window.print()">SALVAR COMPROVANTE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let produtoAtual = "";
+        let valorAtual = "";
+        let metodoSelecionado = "";
+
+        function abrirPagamento(nome, preco) {
+            produtoAtual = nome;
+            valorAtual = preco;
+            document.getElementById('detalhePedido').innerText = nome + " - R$ " + preco;
+            document.getElementById('modalPagamento').style.display = 'flex';
+            document.getElementById('comprovante').style.display = 'none';
+            setPay('Pix'); // Default
+        }
+
+        function setPay(tipo) {
+            metodoSelecionado = tipo;
+            document.querySelectorAll('.opt-pay').forEach(el => el.classList.remove('active'));
+            document.getElementById('pay' + tipo).classList.add('active');
+            
+            const info = document.getElementById('infoExtra');
+            if(tipo === 'Pix') info.innerText = "Chave Pix: cnpj-123.456.789/0001-00";
+            else if(tipo === 'Cartão') info.innerText = "Pague na entrega ou via link enviado no Whats";
+            else info.innerText = "Finalize o pagamento no balcão do QG";
+        }
+
+        function fecharModal() {
+            document.getElementById('modalPagamento').style.display = 'none';
+        }
+
+        function gerarComprovante() {
+            const nome = document.getElementById('nomeAluno').value;
+            if(nome == "") { alert("Digite o nome do aluno."); return; }
+
+            document.getElementById('compNome').innerText = nome.toUpperCase();
+            document.getElementById('compProd').innerText = produtoAtual;
+            document.getElementById('compValor').innerText = valorAtual;
+            document.getElementById('compMetodo').innerText = metodoSelecionado;
+            document.getElementById('compData').innerText = new Date().toLocaleString();
+            
+            let msg = "";
+            if(metodoSelecionado === "QG") msg = "Apresente este ticket no QG para retirar";
+            else msg = "Pedido processado com sucesso!";
+            document.getElementById('msgFinal').innerText = msg;
+
+            document.getElementById('comprovante').style.display = 'block';
+            alert("Pedido Confirmado via " + metodoSelecionado + "!");
+        }
+    </script>
+</body>
+</html>

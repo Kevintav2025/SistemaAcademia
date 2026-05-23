@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Pro Store - Oficial</title>
+    <style>
+        :root {
+            --primaria: #f39c12; 
+            --bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --foto-bg: #252525; 
+            --texto: #ffffff;
+            --sucesso: #27ae60;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body { 
+            background-color: var(--bg); 
+            color: var(--texto); 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .loja-container { width: 100%; max-width: 1200px; }
+
+        .header-loja { 
+            margin-bottom: 30px; 
+            border-bottom: 1px solid #333; 
+            padding-bottom: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%;
+        }
+        .header-loja h1 span { color: var(--primaria); }
+
+        .badge-qg { background: var(--sucesso); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+
+        .grid-produtos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            width: 100%; 
+        }
+
+        .card-produto { 
+            background: var(--card-bg); 
+            border-radius: 12px; 
+            padding: 15px; 
+            border: 1px solid var(--primaria); 
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .foto-container { 
+            background: var(--foto-bg); 
+            width: 100%; 
+            height: 200px; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 15px; 
+        }
+        .foto-container img { max-width: 80%; max-height: 80%; object-fit: contain; }
+
+        .marca-item { color: var(--primaria); font-size: 0.7rem; font-weight: bold; }
+        .nome-item { font-size: 1.1rem; margin: 5px 0 10px; min-height: 45px; }
+        .preco-item { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; }
+
+        .btn-comprar { 
+            background: var(--primaria); 
+            color: black; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            width: 100%;
+        }
+
+        /* MODAL DE PAGAMENTO - CORREÇÃO DA TELA PRETA */
+        #modalPagamento { 
+            display: none; /* COMEÇA ESCONDIDO */
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .modal-content { 
+            background: #222; 
+            padding: 25px; 
+            border-radius: 15px; 
+            border: 1px solid var(--primaria); 
+            width: 90%; 
+            max-width: 400px; 
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        input { width: 100%; padding: 12px; margin: 8px 0; background: #333; border: 1px solid #444; color: white; border-radius: 5px; }
+
+        #comprovante { 
+            display: none; 
+            background: #fff; 
+            color: #000; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin-top: 15px; 
+            text-align: left; 
+            font-family: monospace; 
+            border: 2px dashed #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loja-container">
+        <header class="header-loja">
+            <h1>Iron <span>Pro</span> Store</h1>
+            <div class="badge-qg">SISTEMA DE RETIRADA QG</div>
+        </header>
+
+        <main class="grid-produtos">
+            <div class="card-produto">
+                <div class="foto-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzME2Wr0yZWr8QiNOsAtaelF6dJUljuOvh6mvWDgSbDA2GgW-sRIFZQzc&s=10"></div>
+                <span class="marca-item">IRON PRO</span>
+                <h3 class="nome-item">Whey Protein Isolado</h3>
+                <span class="preco-item">R$ 189,90</span>
+                <button class="btn-comprar" onclick="abrirPagamento('Whey Protein', '189,90')">Retirar no QG</button>
+            </div>
+
+            <div class="card-produto">
+                <div class="foto-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBn00MRYw2neE2vzmn81y8YZ9nbfvrYL548Q&s"></div>
+                <span class="marca-item">IRON PRO</span>
+                <h3 class="nome-item">Creatina Monohidratada</h3>
+                <span class="preco-item">R$ 95,00</span>
+                <button class="btn-comprar" onclick="abrirPagamento('Creatina', '95,00')">Retirar no QG</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalPagamento">
+        <div class="modal-content">
+            <h2 style="color: var(--primaria)">Finalizar Pedido</h2>
+            <p id="detalhePedido" style="margin: 10px 0; font-size: 0.9rem;"></p>
+            
+            <input type="text" id="nomeAluno" placeholder="Nome do Aluno">
+            <input type="text" id="cpfAluno" placeholder="CPF (opcional)">
+
+            <button class="btn-comprar" style="margin-top: 10px;" onclick="confirmar()">GERAR TICKET DE RETIRADA</button>
+            <button onclick="fechar()" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer;">Cancelar</button>
+
+            <div id="comprovante">
+                <center><strong>TICKET DE RETIRADA</strong></center>
+                <hr style="margin:10px 0;">
+                <p><strong>ALUNO:</strong> <span id="compNome"></span></p>
+                <p><strong>PRODUTO:</strong> <span id="compProd"></span></p>
+                <p><strong>VALOR:</strong> R$ <span id="compValor"></span></p>
+                <p style="color:green; font-weight:bold; margin-top:10px; text-align:center;">✓ PAGAMENTO NO BALCÃO</p>
+                <button class="btn-comprar" style="background:#000; color:#fff; margin-top:10px;" onclick="window.print()">SALVAR PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let prod = ""; let val = "";
+        function abrirPagamento(n, p) {
+            prod = n; val = p;
+            document.getElementById('detalhePedido').innerText = n + " - R$ " + p;
+            document.getElementById('modalPagamento').style.display = 'flex';
+            document.getElementById('comprovante').style.display = 'none';
+        }
+        function fechar() { document.getElementById('modalPagamento').style.display = 'none'; }
+        function confirmar() {
+            const nome = document.getElementById('nomeAluno').value;
+            if(!nome) return alert("Digite o nome");
+            document.getElementById('compNome').innerText = nome.toUpperCase();
+            document.getElementById('compProd').innerText = prod;
+            document.getElementById('compValor').innerText = val;
+            document.getElementById('comprovante').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
